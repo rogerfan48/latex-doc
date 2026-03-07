@@ -1,0 +1,14 @@
+# chktex configuration for this project
+
+# Tell chktex that codeblock is a verbatim-like environment (skip all checks inside)
+VerbEnvir { codeblock }
+
+# Tell chktex to ignore the argument of \inlinecode (it contains code, not prose)
+WipeArg { \inlinecode:{} }
+
+# Suppress warnings that are always false positives:
+#  1 = Command terminated with space         (e.g. \columnbreak followed by newline)
+# 24 = Delete space to maintain page refs    (\caption then \label on next line is standard)
+CmdLine {
+    -n1 -n24
+}

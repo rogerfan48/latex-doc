@@ -1,0 +1,325 @@
+% ============================================================
+% macros.tex — Style System & Custom Commands
+% ============================================================
+
+% ======================================================================
+% A. STYLE SYSTEM
+% ======================================================================
+
+% --- Document info setters ---
+\let\DocTitle\empty
+\let\DocSubtitle\empty
+\let\DocContact\empty
+\let\DocAuthor\empty
+\let\DocDate\empty
+\let\DocHeader\empty
+
+\newcommand{\doctitle}[1]{\def\DocTitle{#1}}
+\newcommand{\docsubtitle}[1]{\def\DocSubtitle{#1}}
+\newcommand{\doccontact}[1]{\def\DocContact{#1}}
+\newcommand{\docauthor}[1]{\def\DocAuthor{#1}}
+\newcommand{\docdate}[1]{\def\DocDate{#1}}
+\newcommand{\docheader}[1]{\def\DocHeader{#1}}
+
+\makeatletter
+
+% --- Style dispatcher ---
+\newcommand{\usestyle}[1]{%
+    \ifcsname style@#1\endcsname
+        \csname style@#1\endcsname
+    \else
+        \PackageError{macros}{Unknown style '#1'}{%
+            Available styles: academic, homework, minimal, custom}%
+    \fi
+}
+
+% ------------------------------------------------------------------
+% Style: academic
+%   Title: centered, large title + subtitle + author + date
+%   Sections: \Large bold with underline, numbered
+%   Header: empty | Footer: centered page number
+% ------------------------------------------------------------------
+\newcommand{\style@academic}{%
+    % Title
+    \renewcommand{\maketitle}{%
+        \begin{center}
+            {\fontsize{30pt}{36pt}\selectfont\bfseries\color{\TitleColor}\DocTitle\par}
+            \vspace{6pt}
+            \ifx\DocSubtitle\empty\else
+                {\fontsize{12pt}{16pt}\selectfont\color{\HeadingColor}\DocSubtitle\par}
+                \vspace{4pt}
+            \fi
+            \ifx\DocAuthor\empty\else
+                {\normalsize\DocAuthor\par}
+                \vspace{2pt}
+            \fi
+            \ifx\DocDate\empty\else
+                {\small\color{gray}\DocDate\par}
+                \vspace{2pt}
+            \fi
+            \ifx\DocContact\empty\else
+                {\small\color{gray}\DocContact\par}
+            \fi
+        \end{center}
+        \vspace{12pt}
+    }%
+    % Sections
+    \titleformat{\section}
+        {\color{\HeadingColor}\Large\bfseries}
+        {\thesection}{1em}{}
+        [\vspace{-4pt}\color{\HeadingColor}\titlerule]
+    \titlespacing{\section}{0pt}{12pt}{2pt}
+    \titleformat{\subsection}
+        {\color{\HeadingColor}\large\bfseries}
+        {\thesubsection}{1em}{}
+    \titlespacing{\subsection}{0pt}{10pt}{0pt}
+    \titleformat{\subsubsection}
+        {\color{\HeadingColor}\normalsize\bfseries}
+        {\thesubsubsection}{1em}{}
+    \titlespacing{\subsubsection}{0pt}{6pt}{0pt}
+    % Header / Footer
+    \fancyhf{}
+    \fancyfoot[C]{\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}
+}
+
+% ------------------------------------------------------------------
+% Style: homework
+%   Title: left-right aligned table (title+subtitle left, date+author right), hrule
+%   Sections: \large bold, no underline, numbered
+%   Header: left=\docheader (defaults to subtitle), right=author | Footer: centered page number
+%   Header rule: 0.4pt
+% ------------------------------------------------------------------
+\newcommand{\style@homework}{%
+    % Title (first page has no header)
+    \renewcommand{\maketitle}{%
+        \thispagestyle{plain}%
+        \noindent
+        \begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}r@{}}
+            {\fontsize{30pt}{36pt}\selectfont\bfseries\color{\TitleColor}\DocTitle}
+            & {\normalsize\DocDate} \\[4pt]
+            {\fontsize{12pt}{16pt}\selectfont\color{\HeadingColor}\DocSubtitle}
+            & {\normalsize\DocAuthor} \\
+        \end{tabular*}
+        \ifx\DocContact\empty\else
+            \\[2pt]\noindent{\small\color{gray}\DocContact}
+        \fi
+        \vspace{4pt}
+        \hrule
+        \vspace{12pt}
+    }%
+    % Sections: only h1 numbered ("1.") with rule; h2/h3 unnumbered
+    \titleformat{\section}
+        {\color{\HeadingColor}\LARGE\bfseries}
+        {\thesection.}{0.5em}{}
+        [\vspace{-4pt}\color{gray!70}\titlerule]
+    \titlespacing{\section}{0pt}{10pt}{2pt}
+    \titleformat{\subsection}
+        {\color{\HeadingColor}\Large\bfseries}
+        {}{0em}{}
+    \titlespacing{\subsection}{0pt}{8pt}{-2pt}
+    \titleformat{\subsubsection}
+        {\color{\HeadingColor}\large\bfseries}
+        {}{0em}{}
+    \titlespacing{\subsubsection}{0pt}{6pt}{-2pt}
+    % Header / Footer
+    \fancyhf{}
+    \fancyhead[L]{\small\ifx\DocHeader\empty\DocSubtitle\else\DocHeader\fi}
+    \fancyhead[R]{\small\DocAuthor}
+    \fancyfoot[C]{\small\thepage}
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0pt}
+    \fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}%
+}
+
+% ------------------------------------------------------------------
+% Style: minimal
+%   Title: left-aligned, subtitle · author · date inline
+%   Sections: \large bold, no underline, NO numbering
+%   Header: empty | Footer: centered page number
+% ------------------------------------------------------------------
+\newcommand{\style@minimal}{%
+    % Title
+    \renewcommand{\maketitle}{%
+        \noindent
+        {\fontsize{30pt}{36pt}\selectfont\bfseries\color{\TitleColor}\DocTitle\par}
+        \vspace{4pt}
+        \ifx\DocSubtitle\empty\else
+            {\fontsize{12pt}{16pt}\selectfont\color{\HeadingColor}\DocSubtitle\par}
+            \vspace{2pt}
+        \fi
+        \ifx\DocAuthor\empty\else
+            {\normalsize\DocAuthor}%
+            \ifx\DocDate\empty\else{ · \DocDate}\fi
+            \par
+        \fi
+        \vspace{12pt}
+    }%
+    % Sections (no numbering)
+    \titleformat{\section}
+        {\color{\HeadingColor}\Large\bfseries}
+        {}{0em}{}
+    \titlespacing{\section}{0pt}{12pt}{2pt}
+    \titleformat{\subsection}
+        {\color{\HeadingColor}\large\bfseries}
+        {}{0em}{}
+    \titlespacing{\subsection}{0pt}{8pt}{0pt}
+    \titleformat{\subsubsection}
+        {\color{\HeadingColor}\normalsize\bfseries}
+        {}{0em}{}
+    \titlespacing{\subsubsection}{0pt}{6pt}{0pt}
+    % Header / Footer
+    \fancyhf{}
+    \fancyfoot[C]{\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}
+}
+
+% ------------------------------------------------------------------
+% Style: custom (academic as base; override with \renewcommand / \titleformat after)
+% ------------------------------------------------------------------
+\newcommand{\style@custom}{%
+    \style@academic
+}
+
+\makeatother
+
+% ======================================================================
+% B. CODE BLOCKS
+% ======================================================================
+
+% codeblock environment: \begin{codeblock}[python] ... \end{codeblock}
+% Light-themed code block with left accent border (uses tcolorbox + listings)
+\newtcblisting{codeblock}[1][python]{
+    colback=CodeBg,
+    colframe=CodeBg,
+    listing only,
+    listing options={language=#1},
+    arc=2pt,
+    boxrule=0pt,
+    borderline west={2.5pt}{0pt}{CodeAccent},
+    left=8pt, right=8pt, top=4pt, bottom=4pt,
+    before skip=8pt,
+    after skip=8pt,
+}
+
+% inline code — rounded background pill
+\newtcbox{\inlinecode}{
+    on line,
+    colback=\CodeBgColor,
+    colframe=\CodeBgColor,
+    boxrule=0pt,
+    arc=3pt,
+    boxsep=0pt,
+    left=4pt, right=4pt, top=1.5pt, bottom=1.5pt,
+    fontupper=\small\ttfamily,
+}
+
+% ======================================================================
+% D. CALLOUT / NOTE BOXES
+% ======================================================================
+
+% Usage: \begin{bluebox}...\end{bluebox}
+%        \begin{bluebox}[Custom Title]...\end{bluebox}
+
+\definecolor{BoxBlue}{HTML}{4a90d9}
+\definecolor{BoxAmber}{HTML}{e6a117}
+\definecolor{BoxGreen}{HTML}{3a9a5c}
+\definecolor{BoxRed}{HTML}{d94452}
+
+\newtcolorbox{bluebox}[1][Note]{
+    colback=BoxBlue!6, colframe=BoxBlue, coltitle=white,
+    title={\smash{\textbf{#1}}\vphantom{N}}, fonttitle=\sffamily,
+    boxrule=0.5pt, arc=2pt,
+    left=6pt, right=6pt, top=4pt, bottom=4pt,
+}
+
+\newtcolorbox{amberbox}[1][Warning]{
+    colback=BoxAmber!8, colframe=BoxAmber, coltitle=white,
+    title={\smash{\textbf{#1}}\vphantom{N}}, fonttitle=\sffamily,
+    boxrule=0.5pt, arc=2pt,
+    left=6pt, right=6pt, top=4pt, bottom=4pt,
+}
+
+\newtcolorbox{greenbox}[1][Tip]{
+    colback=BoxGreen!6, colframe=BoxGreen, coltitle=white,
+    title={\smash{\textbf{#1}}\vphantom{N}}, fonttitle=\sffamily,
+    boxrule=0.5pt, arc=2pt,
+    left=6pt, right=6pt, top=4pt, bottom=4pt,
+}
+
+\newtcolorbox{redbox}[1][Danger]{
+    colback=BoxRed!6, colframe=BoxRed, coltitle=white,
+    title={\smash{\textbf{#1}}\vphantom{N}}, fonttitle=\sffamily,
+    boxrule=0.5pt, arc=2pt,
+    left=6pt, right=6pt, top=4pt, bottom=4pt,
+}
+
+% ======================================================================
+% E. THEOREM ENVIRONMENTS
+% ======================================================================
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{proposition}{Proposition}[section]
+
+% ======================================================================
+% F. ALGORITHM (algorithm2e defaults set in preamble)
+% ======================================================================
+
+% ======================================================================
+% G. TODO
+% ======================================================================
+
+% Margin todo note
+\newcommand{\todox}[1]{\todo[inline, color=yellow!40]{#1}}
+
+% Checkbox-style todo
+\newcommand{\todomark}[1]{%
+    $\square$~{#1}%
+}
+\newcommand{\tododone}[1]{%
+    $\boxtimes$~{\sout{#1}}%
+}
+
+% ======================================================================
+% H. MULTI-COLUMN LAYOUTS
+% ======================================================================
+
+\newenvironment{twocol}{%
+    \begin{multicols}{2}%
+}{%
+    \end{multicols}%
+}
+
+\newenvironment{threecol}{%
+    \begin{multicols}{3}%
+}{%
+    \end{multicols}%
+}
+
+% ======================================================================
+% I. BLOCKQUOTE
+% ======================================================================
+
+\newtcolorbox{blockquote}{
+    blanker,
+    borderline west={3pt}{0pt}{gray!60},
+    left=12pt,
+    top=4pt,
+    bottom=4pt,
+    before skip=8pt,
+    after skip=8pt,
+    fontupper=\itshape\color{gray!80!black},
+}
+
+% ======================================================================
+% J. MARGIN NOTE
+% ======================================================================
+
+\newcommand{\marginmark}[1]{%
+    \marginnote{\footnotesize\color{gray}#1}%
+}

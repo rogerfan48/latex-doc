@@ -1,0 +1,183 @@
+% ============================================================
+% preamble.tex — Package Loading & Global Configuration
+% Compile with: lualatex --shell-escape main.tex
+% ============================================================
+
+% ====== FONT CONFIG ======
+\newcommand{\MainFont}{Optima}     % LaTeX default (Computer Modern successor)
+\newcommand{\SansFont}{Latin Modern Sans}      % LaTeX default sans
+\newcommand{\MonoFont}{JetBrainsMono Nerd Font Mono}
+\newcommand{\CJKMainFont}{jf-jinxuan-Book}
+\newcommand{\CJKSansFont}{jf-jinxuanlatte-2.0}
+\newcommand{\CJKMonoFont}{JetBrainsMono Nerd Font Mono}
+
+% ====== PAGE LAYOUT ======
+\newcommand{\PaperSize}{a4paper}
+\newcommand{\MarginLeft}{1.5cm}
+\newcommand{\MarginRight}{1.5cm}
+\newcommand{\MarginTop}{2cm}
+\newcommand{\MarginBottom}{2cm}
+\newcommand{\ParIndent}{0pt}          % paragraph indentation
+\newcommand{\ParSkip}{6pt}            % paragraph spacing
+\newcommand{\BaseLineStretch}{1.15}   % line spacing multiplier
+
+% ====== COLORS ======
+\newcommand{\TitleColor}{black}
+\newcommand{\HeadingColor}{black}
+\newcommand{\BodyColor}{black}
+\newcommand{\LinkColor}{MidnightBlue}
+\newcommand{\CaptionColor}{black}
+\newcommand{\CodeBgColor}{gray!10}
+
+% ============================================================
+% PACKAGE LOADING
+% ============================================================
+
+% --- Typography ---
+\usepackage{microtype}                     % typographic micro-adjustments
+
+% --- Fonts ---
+\usepackage{fontspec}                      % system font loading (LuaLaTeX)
+\usepackage{luatexja-fontspec}             % CJK support for LuaLaTeX
+
+% --- Page Layout ---
+\usepackage{geometry}                      % page margins
+\usepackage{fancyhdr}                      % header / footer
+\usepackage{multicol}                      % multi-column layouts
+\usepackage{marginnote}                    % margin notes
+
+% --- Colors & Graphics ---
+\usepackage[dvipsnames, svgnames]{xcolor}  % extended color names
+\usepackage{graphicx}                      % image inclusion
+\graphicspath{{figures/}{assets/}}
+
+% --- Math ---
+\usepackage{amsmath, amssymb, amsthm}
+
+% --- Tables ---
+\usepackage{booktabs}                      % professional tables
+
+% --- Lists ---
+\usepackage{enumitem}                      % customizable lists
+
+% --- Code Highlighting ---
+\usepackage{listings}                      % syntax highlighting (no external deps)
+
+% --- Section Formatting ---
+\usepackage{titlesec}
+
+% --- Captions ---
+\usepackage{caption}
+
+% --- Boxes ---
+\usepackage[most]{tcolorbox}               % colored boxes / callouts
+\usepackage{tikz}                          % inline graphics (link badges, etc.)
+
+% --- Algorithms ---
+\usepackage[ruled, lined, linesnumbered]{algorithm2e}
+
+% --- Bibliography ---
+\usepackage[
+    backend=biber,
+    style=numeric,
+    sorting=none
+]{biblatex}
+
+% --- Todo Notes ---
+\setlength{\marginparwidth}{2cm}
+\usepackage{todonotes}
+
+% --- Strikethrough ---
+\usepackage[normalem]{ulem}                % \sout{text} for strikethrough, normalem keeps \emph italic
+
+% --- Hyperlinks (must be near last) ---
+\usepackage{hyperref}
+
+% --- Smart Cross-References (must be after hyperref) ---
+\usepackage{cleveref}                      % \cref{fig:xxx} → "Figure 1" automatically
+
+% ============================================================
+% PACKAGE CONFIGURATION (uses variables defined above)
+% ============================================================
+
+% --- Fonts ---
+\setmainfont[Ligatures=TeX]{\MainFont}
+\setsansfont{\SansFont}
+\setmonofont[Scale=0.85]{\MonoFont}
+
+\setmainjfont[BoldFont=jf-jinxuan-Bold]{\CJKMainFont}
+\setsansjfont{\CJKSansFont}
+
+% --- Page Geometry ---
+\geometry{
+    \PaperSize,
+    left=\MarginLeft,
+    right=\MarginRight,
+    top=\MarginTop,
+    bottom=\MarginBottom,
+    headheight=14pt,
+    headsep=8pt,
+    footskip=20pt,
+}
+
+% --- Paragraph ---
+\setlength{\parindent}{\ParIndent}
+\setlength{\parskip}{\ParSkip}
+\renewcommand{\baselinestretch}{\BaseLineStretch}
+
+% --- Body Color ---
+\color{\BodyColor}
+
+% --- Header / Footer (base setup; styles configure content) ---
+\pagestyle{fancy}
+\fancyhf{}
+
+% --- Hyperlinks ---
+\hypersetup{
+    colorlinks=true,
+    linkcolor=\LinkColor,
+    filecolor=magenta,
+    urlcolor=\LinkColor,
+    citecolor=\LinkColor,
+}
+
+% --- Listings (code highlighting — light theme, rendered inside tcolorbox) ---
+\definecolor{CodeBg}{HTML}{f6f8fa}
+\definecolor{CodeFg}{HTML}{24292e}
+\definecolor{CodeKeyword}{HTML}{d73a49}
+\definecolor{CodeString}{HTML}{032f62}
+\definecolor{CodeComment}{HTML}{6a737d}
+\definecolor{CodeNumber}{HTML}{a0a8b2}
+\definecolor{CodeFunction}{HTML}{6f42c1}
+\definecolor{CodeAccent}{HTML}{d0d7de}
+\lstset{
+    basicstyle=\small\ttfamily\color{CodeFg},
+    numbers=left,
+    numberstyle=\tiny\ttfamily\color{CodeNumber},
+    breaklines=true,
+    tabsize=4,
+    frame=none,
+    showstringspaces=false,
+    keywordstyle=\color{CodeKeyword}\bfseries,
+    commentstyle=\color{CodeComment}\itshape,
+    stringstyle=\color{CodeString},
+    columns=fullflexible,
+    keepspaces=true,
+    xleftmargin=14pt,
+}
+
+% --- Captions ---
+\captionsetup{
+    font=small,
+    labelfont={bf},
+    textfont={color=\CaptionColor},
+    skip=6pt,
+}
+
+% --- Algorithm2e ---
+\SetAlgoLined
+\SetKwInput{KwInput}{Input}
+\SetKwInput{KwOutput}{Output}
+
+% --- Lists ---
+\setlist{nosep, leftmargin=1.5em}

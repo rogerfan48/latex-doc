@@ -1,0 +1,578 @@
+% !TEX program = lualatex
+% !TEX options = --shell-escape
+\documentclass[a4paper,12pt]{article}
+
+\input{preamble}
+\input{macros}
+
+% ====== DOCUMENT INFO ======
+% 填入文件資訊，留空或不寫的欄位會自動跳過（不會出現空白行）
+\doctitle{Template Reference}
+\docsubtitle{A comprehensive guide to using the LaTeX template}   % 選填
+\docauthor{Roger Fan}
+\docdate{\today}
+% \doccontact{email@example.com}   % 選填
+% \docheader{Custom Header}       % 選填，homework 樣式的頁首左邊文字（預設為 subtitle）
+
+% ====== STYLE ======
+% 可用樣式：academic / homework / minimal / custom
+%   academic — 標題置中，section 有底線，頁尾頁碼
+%   homework — 標題左右對齊（標題+課名 左，日期+姓名 右），頁首左=\docheader（預設 subtitle）右=姓名
+%   minimal  — 標題靠左，section 無編號，乾淨簡潔
+%   custom   — 以 academic 為底，可在下方自行覆蓋
+\usestyle{homework}
+
+\begin{document}
+
+\maketitle
+
+% ============================================================
+\section{Headings}
+% ============================================================
+
+% \section{標題}        — 第一層（自動編號 1. 2. 3.）
+% \subsection{標題}     — 第二層（1.1 1.2）
+% \subsubsection{標題}  — 第三層（1.1.1）
+% 編號格式和是否顯示編號取決於 \usestyle 的設定
+
+這是正文範例。Body text with both English and 中文混排。
+
+\subsection{Heading 2 Example}
+
+段落之間空一行就會自動產生間距（由 preamble.tex 的 ParSkip 控制）。
+
+\subsubsection{Heading 3 Example}
+
+第三層標題。
+
+% ============================================================
+\section{Text Formatting}
+% ============================================================
+
+% --- 基本格式 ---
+\textbf{粗體 Bold}、
+\textit{斜體 Italic}、
+\texttt{等寬字 Monospace}、
+\underline{底線 Underline}、
+\sout{刪除線 Strikethrough}。
+
+% --- 組合使用 ---
+% 用大括號包住，裡面疊加效果
+\textbf{\textit{粗斜體}}、
+{\bfseries\color{red}粗體紅字}。
+
+% --- 顏色 ---
+% \textcolor{顏色}{文字}   — 指定文字變色
+% 預設可用顏色：red, blue, green, orange, purple, gray, cyan, magenta, ...
+% dvipsnames 額外顏色：MidnightBlue, ForestGreen, BrickRed, ...（見 xcolor 文件）
+% 自訂顏色：\definecolor{MyColor}{HTML}{FF6B35}（在 preamble 或文件開頭定義）
+\textcolor{red}{紅色文字}、
+\textcolor{MidnightBlue}{深藍色文字}、
+\textcolor{ForestGreen}{森林綠文字}。
+
+% --- 字體大小（由小到大）---
+% \tiny \scriptsize \footnotesize \small \normalsize \large \Large \LARGE \huge \Huge
+% 用大括號限制範圍：{\large 這段比較大}，括號外恢復正常
+{\footnotesize 小字}、
+{\normalsize 正常}、
+{\large 大字}、
+{\Large 更大}。
+
+% --- 特殊字元與空白 ---
+% ~          — 不斷行空格（non-breaking space）
+%              兩邊的字不會被拆到不同行，常用於 "Figure~1"、"Dr.~Smith"
+% -          — 短橫線（hyphen），用於複合詞：well-known
+% --         — 半形破折號（en dash），用於數字範圍：pp.~1--10、2020--2024
+% ---        — 全形破折號（em dash），用於插入語：LaTeX --- a typesetting system --- is powerful.
+% ``文字''   — 英文左右雙引號（鍵盤上 ` 在 Tab 上方，' 在 Enter 左邊）
+% `文字'     — 英文左右單引號
+% \%         — 顯示 % 符號（% 本身是註解符號）
+% \&         — 顯示 & 符號（& 本身是表格欄位分隔符）
+% \$         — 顯示 $ 符號（$ 本身是數學模式符號）
+% \\         — 強制換行（不建議在正文中用，正文用空行分段落即可）
+
+Hyphens and dashes: well-known, pp.~1--10, 2020--2024, LaTeX --- a powerful tool.
+
+English quotes: ``double quotes'' and `single quotes'.
+
+% --- 超連結 ---
+\href{https://example.com}{可點擊的連結文字}。
+
+% ============================================================
+\section{Lists}
+% ============================================================
+
+% --- 無序列表 ---
+% 預設符號為 •，可巢狀（符號自動變化）
+\subsection{Unordered List}
+
+\begin{itemize}
+    \item First item
+    \item Second item with sub-items:
+    \begin{itemize}
+        \item Sub-item A
+        \item Sub-item B
+    \end{itemize}
+    \item Third item
+\end{itemize}
+
+% --- 有序列表 ---
+\subsection{Ordered List}
+
+\begin{enumerate}
+    \item Step one
+    \item Step two
+    \item Step three
+\end{enumerate}
+
+% --- 自訂符號與起始編號 ---
+% [label=\textbullet]   — 指定符號（\textbullet •, \textendash –, $\star$ ★）
+% [start=5]             — 從 5 開始編號
+% [label=(\alph*)]      — 改成 (a) (b) (c)
+% [label=(\roman*)]     — 改成 (i) (ii) (iii)
+\subsection{Custom Lists}
+
+\begin{enumerate}[label=(\alph*)]
+    \item First with letter label
+    \item Second with letter label
+\end{enumerate}
+
+\begin{enumerate}[start=3]
+    \item This starts at 3
+    \item This is 4
+\end{enumerate}
+
+% --- 描述列表 ---
+\subsection{Description List}
+
+\begin{description}
+    \item[Term A] Definition of term A.
+    \item[Term B] Definition of term B.
+\end{description}
+
+% ============================================================
+\section{Callout Boxes}
+% ============================================================
+
+% 四種顏色的提示框，每種都有預設標題，也可以自訂
+% \begin{bluebox}              — 預設標題 "Note"
+% \begin{bluebox}[Custom Title] — 自訂標題
+% 同理：amberbox (Warning)、greenbox (Tip)、redbox (Danger)
+
+\begin{bluebox}
+This is an informational note with default title.
+\end{bluebox}
+
+\begin{amberbox}[Caution: Memory Leak]
+This is a warning with a custom title.
+\end{amberbox}
+
+\begin{greenbox}
+This is a tip with default title.
+\end{greenbox}
+
+\begin{redbox}[Critical Bug]
+This is a danger alert with a custom title.
+\end{redbox}
+
+% ============================================================
+\section{Blockquote}
+% ============================================================
+
+% 左側灰色豎線 + 斜體灰字，用於引言
+\begin{blockquote}
+The only way to do great work is to love what you do.
+
+--- Steve Jobs
+\end{blockquote}
+
+% ============================================================
+\section{Mathematics}
+% ============================================================
+
+% --- 行內數學 ---
+% 用 $ ... $ 包住
+Inline math: $E = mc^2$, $\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$.
+
+% --- 獨立公式（有編號）---
+% equation 環境，自動編號，可加 \label 引用
+\begin{equation}
+    \int_{-\infty}^{\infty} e^{-x^2} \, dx = \sqrt{\pi}
+    \label{eq:gaussian}
+\end{equation}
+
+Reference: \cref{eq:gaussian}.
+
+% --- 獨立公式（無編號）---
+% 用 \[ ... \] 或 equation* 環境
+\[
+    a^2 + b^2 = c^2
+\]
+
+% --- 多行對齊公式 ---
+% align 環境，用 & 標記對齊點，用 \\ 換行
+% 每行都有編號；不要編號的行在 \\ 前加 \nonumber
+\begin{align}
+    f(x) &= x^2 + 2x + 1     \label{eq:fx} \\
+         &= (x + 1)^2         \nonumber
+\end{align}
+
+% --- 常用符號速查 ---
+% \frac{分子}{分母}    — 分數
+% \sqrt{x}, \sqrt[3]{x} — 平方根、立方根
+% x^{2}, x_{i}         — 上標、下標
+% \sum, \prod, \int     — 求和、連乘、積分
+% \alpha \beta \gamma   — 希臘字母
+% \leq \geq \neq       — ≤ ≥ ≠
+% \in \notin \subset    — ∈ ∉ ⊂
+% \to \Rightarrow       — → ⇒
+% \infty                — ∞
+% \cdot \times          — · ×
+% \mathbb{R}            — ℝ（需 amssymb）
+% \text{文字}           — 在數學模式中插入普通文字
+
+% --- 定理環境 ---
+% 可用：theorem, definition, lemma, corollary, proposition
+% 自動編號，格式為 "Theorem 7.1"（section.序號）
+
+\begin{theorem}
+    For any triangle with sides $a$, $b$, and $c$, and the angle $C$ opposite side $c$:
+    \[
+        c^2 = a^2 + b^2 - 2ab\cos C
+    \]
+\end{theorem}
+
+\begin{definition}
+    A \textbf{group} $(G, \cdot)$ is a set $G$ with a binary operation $\cdot$ satisfying closure, associativity, identity, and invertibility.
+\end{definition}
+
+\begin{lemma}
+    If $f$ is continuous on $[a, b]$, then $f$ is bounded on $[a, b]$.
+\end{lemma}
+
+% ============================================================
+\section{Code}
+% ============================================================
+
+% --- 行內程式碼 ---
+% \inlinecode{程式碼} — 灰底圓角小藥丸樣式
+Inline code: \inlinecode{print("hello")} is a Python statement.
+
+% --- 程式碼區塊 ---
+% \begin{codeblock}[語言] ... \end{codeblock}
+% 預設語言是 python，可改成其他 listings 支援的語言：
+%   python, java, c, cpp, javascript, bash, sql, html, ruby, go, rust, ...
+% 完整列表見 listings 套件文件
+
+\begin{codeblock}[python]
+def fibonacci(n: int) -> int:
+    """Return the n-th Fibonacci number."""
+    if n <= 1:
+        return n
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+print(fibonacci(10))  # 55
+\end{codeblock}
+
+\begin{codeblock}[bash]
+# shell script example
+for i in $(seq 1 5); do
+    echo "iteration $i"
+done
+\end{codeblock}
+
+% ============================================================
+\section{Figures}
+% ============================================================
+
+% figure 語法解析：
+%   \begin{figure}[htbp]          — 浮動環境（LaTeX 自動決定最佳位置）
+%     位置偏好：h=here, t=top, b=bottom, p=獨立頁
+%     \centering                   — 圖片置中
+%     \includegraphics[選項]{檔名} — 載入圖片
+%       檔名：可帶副檔名 (head.jpg) 或不帶 (head)
+%             不帶時 LaTeX 自動搜尋 .pdf → .png → .jpg
+%             搜尋路徑已設定為 figures/ 和 assets/（見 preamble.tex）
+%       常用選項：
+%         width=0.8\linewidth      — 寬度（\linewidth=當前欄寬, \textwidth=頁寬）
+%         height=5cm               — 高度
+%         keepaspectratio           — 同時限制寬高時保持比例
+%     \caption{說明文字}           — 圖片標題（自動編號）
+%     \label{fig:xxx}              — 引用標籤（用 \cref{fig:xxx} 自動產生 "Figure 1"）
+%   \end{figure}
+
+\subsection{Basic Usage}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{head}
+    \caption{範例圖片（預設滿版寬）。}
+    \label{fig:demo-full}
+\end{figure}
+
+Reference: \cref{fig:demo-full} shows the full-width figure.
+
+\subsection{Size Control}
+
+% 限制寬度
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.6\linewidth]{head}
+    \caption{縮到 60\% 頁寬。}
+    \label{fig:demo-60}
+\end{figure}
+
+% 限制高度
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[height=4cm]{head}
+    \caption{限制高度 4cm。}
+    \label{fig:demo-4cm}
+\end{figure}
+
+% 同時限制寬高，保持比例（不超過任一限制）
+% \includegraphics[width=0.5\linewidth, height=3cm, keepaspectratio]{head}
+
+\subsection{Side-by-Side Figures}
+
+% 兩張圖水平並排，各有自己的 caption 和 label
+% minipage 寬度加起來要 < 1\linewidth（留一點給 \hfill 的間距）
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}[t]{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{head}
+        \caption{左圖。}
+        \label{fig:side-left}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{head}
+        \caption{右圖。}
+        \label{fig:side-right}
+    \end{minipage}
+\end{figure}
+
+See \cref{fig:side-left} and \cref{fig:side-right}.
+
+% ============================================================
+\section{Tables}
+% ============================================================
+
+% table 語法解析：
+%   \begin{table}[htbp]       — 浮動環境，位置偏好同 figure
+%   \centering                 — 置中
+%   \caption{} + \label{}      — 標題和引用標籤
+%   \begin{tabular}{欄位定義}  — 表格內容
+%     欄位對齊：l=靠左, c=置中, r=靠右（幾個字母 = 幾欄）
+%     &                        — 分隔欄位
+%     \\                       — 換行
+%     \toprule                 — 頂線（booktabs 提供，比 \hline 好看）
+%     \midrule                 — 中線（表頭與內容之間）
+%     \bottomrule              — 底線
+%   \end{tabular}
+
+\begin{table}[htbp]
+    \centering
+    \caption{A sample table with booktabs.}
+    \label{tab:sample}
+    \begin{tabular}{lcc}
+        \toprule
+        \textbf{Name} & \textbf{Score} & \textbf{Grade} \\
+        \midrule
+        Alice   & 95 & A+ \\
+        Bob     & 87 & A  \\
+        Charlie & 72 & B  \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+See \cref{tab:sample}.
+
+% ============================================================
+\section{Algorithm}
+% ============================================================
+
+% algorithm2e 語法解析：
+%   \begin{algorithm}[H]          — [H] 強制放在這裡（不浮動）
+%   \caption{} + \label{}         — 標題和引用標籤
+%   \KwInput{}, \KwOutput{}       — 輸入輸出描述
+%   \;                            — 行尾分號（每行結尾都要加）
+%   \While{條件}{程式碼}          — while 迴圈
+%   \For{條件}{程式碼}            — for 迴圈
+%   \uIf{條件}{} \uElseIf{}{} \Else{} — if-elseif-else（u 表示不加結尾橫線）
+%   \Return{值}                   — 回傳
+%   數學模式：直接用 $ ... $ 寫變數和運算式
+
+\begin{algorithm}[H]
+    \caption{Binary Search}
+    \label{alg:bsearch}
+    \KwInput{Sorted array $A[1..n]$, target $t$}
+    \KwOutput{Index of $t$ in $A$, or $-1$}
+    $lo \gets 1$, $hi \gets n$\;
+    \While{$lo \le hi$}{
+        $mid \gets \lfloor (lo + hi) / 2 \rfloor$\;
+        \uIf{$A[mid] = t$}{
+            \Return{$mid$}\;
+        }
+        \uElseIf{$A[mid] < t$}{
+            $lo \gets mid + 1$\;
+        }
+        \Else{
+            $hi \gets mid - 1$\;
+        }
+    }
+    \Return{$-1$}\;
+\end{algorithm}
+
+See \cref{alg:bsearch}.
+
+% ============================================================
+\section{Cross-References}
+% ============================================================
+
+% \cref 由 cleveref 套件提供，自動產生類型名稱 + 編號
+% 根據 label 前綴自動判斷類型：
+%   \label{fig:xxx}  → \cref{fig:xxx}  → "Figure 1"
+%   \label{tab:xxx}  → \cref{tab:xxx}  → "Table 1"
+%   \label{eq:xxx}   → \cref{eq:xxx}   → "Equation (1)"
+%   \label{alg:xxx}  → \cref{alg:xxx}  → "Algorithm 1"
+%   \label{sec:xxx}  → \cref{sec:xxx}  → "Section 1"
+%
+% 一次引用多個：\cref{fig:side-left,fig:side-right} → "Figures 1 and 2"
+%
+% \Cref 用於句首（大寫開頭）：\Cref{fig:xxx} → "Figure 1"
+% \cref 用於句中（小寫開頭）：\cref{fig:xxx} → "figure 1"（視語言設定）
+
+See \cref{fig:demo-full}, \cref{tab:sample}, \cref{eq:gaussian}, and \cref{alg:bsearch}.
+
+% ============================================================
+\section{Footnotes and Margin Notes}
+% ============================================================
+
+% --- 腳註 ---
+% \footnote{內容} — 在當前位置加上編號，頁尾顯示內容
+This sentence has a footnote\footnote{This is the footnote content, displayed at the bottom of the page.}.
+
+% --- 邊欄筆記 ---
+% \marginmark{內容} — 在頁面邊欄顯示灰色小字（自訂指令，定義在 macros.tex）
+This paragraph has a margin note.\marginmark{Remember this point.}
+
+% ============================================================
+\section{Colors}
+% ============================================================
+
+% --- 文字變色 ---
+% \textcolor{顏色}{文字}
+\textcolor{red}{Red}, \textcolor{blue}{Blue}, \textcolor{ForestGreen}{ForestGreen}.
+
+% --- 整段變色 ---
+% {\color{顏色} 這段文字都是這個顏色}
+{\color{BrickRed} This entire paragraph is in BrickRed. The color applies until the closing brace.}
+
+% --- 自訂顏色 ---
+% \definecolor{名稱}{模式}{值}
+%   模式 HTML: \definecolor{MyOrange}{HTML}{FF6B35}
+%   模式 RGB:  \definecolor{MyBlue}{rgb}{0.1, 0.3, 0.8}（0~1 範圍）
+%
+% --- 顏色的 ! 混合語法 ---
+% A!比例!B = 取比例% 的 A + 剩下的 B
+%   blue!30!white  = 30% 藍 + 70% 白 → 淡藍
+%   red!50!black   = 50% 紅 + 50% 黑 → 暗紅
+%   gray!10        = gray!10!white 的簡寫 → 10% 灰 + 90% 白 = 非常淺的灰
+% 可以連鎖：red!50!blue!30!white = 先混出 50%紅+50%藍，再取 30% 混白
+\definecolor{CustomPurple}{HTML}{7B2D8E}
+\textcolor{CustomPurple}{Custom purple text}. Also: \textcolor{blue!50!black}{50\% blue + 50\% black}.
+
+% --- 背景高亮 ---
+% \colorbox{背景色}{文字}
+\colorbox{yellow!30}{highlighted text} in a sentence.
+
+% ============================================================
+\section{Multi-Column Layout}
+% ============================================================
+
+% twocol / threecol — 兩欄 / 三欄排版
+% \columnbreak       — 強制在此處換到下一欄
+
+\subsection{Two Columns}
+
+\begin{twocol}
+\textbf{Left column.} Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
+
+\columnbreak
+
+\textbf{Right column.} Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.
+\end{twocol}
+
+\subsection{Three Columns}
+
+\begin{threecol}
+\textbf{Column 1.} Short text.
+
+\columnbreak
+
+\textbf{Column 2.} Medium length paragraph for demonstration.
+
+\columnbreak
+
+\textbf{Column 3.} Another column.
+\end{threecol}
+
+% ============================================================
+\section{Page Control}
+% ============================================================
+
+% \newpage     — 強制換頁
+% \clearpage   — 強制換頁，並輸出所有尚未放置的浮動環境（figure, table）
+%                如果有圖表被 LaTeX 延遲放置，\clearpage 會先把它們全部輸出
+% \pagebreak   — 建議換頁（LaTeX 可能忽略）
+% \nopagebreak — 建議不要在此換頁
+
+% 一般用 \clearpage 比 \newpage 安全，因為它確保浮動環境不會跑到錯誤的位置
+
+% ============================================================
+\section{Todo Examples}
+% ============================================================
+
+% \todox{內容}     — 黃色行內提醒（顯眼的備忘）
+% \todomark{內容}  — ☐ 未完成項目
+% \tododone{內容}  — ☒ 已完成項目（文字加刪除線）
+
+\todox{This is an inline todo note for review.}
+
+Task list:
+\begin{itemize}[label={}]
+    \item \todomark{Write the introduction}
+    \item \todomark{Add figures}
+    \item \tododone{Set up template}
+\end{itemize}
+
+% ============================================================
+\section{Bibliography}
+% ============================================================
+
+% 1. 建立 .bib 檔案（例如 references.bib），內容格式：
+%    @article{key,
+%        author = {Author Name},
+%        title  = {Paper Title},
+%        journal = {Journal Name},
+%        year   = {2024},
+%    }
+%    可從 Google Scholar 直接匯出 BibTeX 格式
+%
+% 2. 在 preamble.tex 的 biblatex 設定下方加入：
+%    \addbibresource{references.bib}
+%
+% 3. 在文中引用：\cite{key} → [1]
+%    或 \textcite{key} → "Author [1]"
+%
+% 4. 在文末放置參考文獻列表：
+%    \printbibliography
+%
+% 5. 編譯順序：lualatex → biber → lualatex → lualatex
+
+% \printbibliography
+
+\end{document}

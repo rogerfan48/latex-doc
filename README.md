@@ -1,0 +1,80 @@
+# latex-doc
+
+A personal LaTeX document template with pre-configured styles, macros, and a project scaffolding tool.
+
+## Quick Start
+
+### 1. Source the script
+
+Add the following line to your `~/.zshrc`:
+
+```bash
+source /path/to/latex-doc/scripts/newtex.sh
+```
+
+### 2. Create a new project
+
+```bash
+newtex my-report
+```
+
+This creates the following structure:
+
+```
+my-report/
+├── main.tex        # Main document (edit this)
+├── preamble.tex    # Package loading & configuration
+├── macros.tex      # Style system & custom commands
+├── .gitignore      # LaTeX + macOS ignore rules
+├── .chktexrc       # chktex linter configuration
+└── assets/         # Place images here
+```
+
+Use `-r` or `--ref` to include a reference/cheatsheet file:
+
+```bash
+newtex my-report --ref
+```
+
+This additionally copies `ref.tex`, which demonstrates all available features.
+
+## Available Styles
+
+Set the style in `main.tex` with `\usestyle{name}`:
+
+| Style | Description |
+|---|---|
+| `academic` | Centered title, numbered sections with underline, page number footer |
+| `homework` | Left-right title layout (title + course left, date + author right), header with `\docheader` (defaults to subtitle) and author |
+| `minimal` | Left-aligned title, unnumbered sections, clean and simple |
+| `custom` | Based on `academic`, override with your own `\titleformat` calls |
+
+## Features
+
+- **Style system** — Switch between document layouts with a single command
+- **Code blocks** — Dark-themed syntax-highlighted code via `codeblock` environment
+- **Inline code** — Rounded background pill via `\inlinecode{}`
+- **Callout boxes** — `bluebox`, `amberbox`, `greenbox`, `redbox` with optional custom titles
+- **Blockquote** — Left-bordered italic quote block
+- **Theorem environments** — `theorem`, `definition`, `lemma`, `corollary`, `proposition`
+- **Algorithm** — `algorithm2e` with pre-configured styling
+- **Multi-column** — `twocol` and `threecol` environments
+- **Todo notes** — `\todox{}`, `\todomark{}`, `\tododone{}`
+- **Margin notes** — `\marginmark{}`
+
+## Compilation
+
+Compile with LuaLaTeX:
+
+```bash
+lualatex --shell-escape main.tex
+```
+
+For bibliography support:
+
+```bash
+lualatex --shell-escape main.tex
+biber main
+lualatex --shell-escape main.tex
+lualatex --shell-escape main.tex
+```

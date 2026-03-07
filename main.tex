@@ -1,0 +1,29 @@
+% !TEX program = lualatex
+% !TEX options = --shell-escape
+\documentclass[a4paper,12pt]{article}
+
+\input{preamble}
+\input{macros}
+
+% leave blank or omit fields to skip them (no empty lines will be shown)
+\doctitle{Title of the Document}
+\docsubtitle{Subtitle of the Document}   % optional
+\docauthor{Sheng-Wei (Roger) Fan}
+\docdate{\today}
+% \doccontact{email@example.com}           % optional
+% \docheader{Custom Header}               % optional, defaults to subtitle (homework style)
+
+% available styles: academic / homework / minimal / custom
+\usestyle{homework}
+
+\begin{document}
+
+\maketitle
+
+% ============================================================
+\section{Headings}
+% ============================================================
+
+這是正文。This is the main text.
+
+\end{document}
