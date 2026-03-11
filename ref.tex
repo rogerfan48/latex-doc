@@ -17,7 +17,7 @@
 % ====== STYLE ======
 % 可用樣式：academic / homework / minimal / custom
 %   academic — 標題置中，section 有底線，頁尾頁碼
-%   homework — 標題左右對齊（標題+課名 左，日期+姓名 右），頁首左=\docheader（預設 subtitle）右=姓名
+%   homework — 標題左右對齊（標題+課名 左，日期+姓名 右），section 無編號，頁首左=\docheader（預設 subtitle）右=姓名
 %   minimal  — 標題靠左，section 無編號，乾淨簡潔
 %   custom   — 以 academic 為底，可在下方自行覆蓋
 \usestyle{homework}
@@ -30,9 +30,9 @@
 \section{Headings}
 % ============================================================
 
-% \section{標題}        — 第一層（自動編號 1. 2. 3.）
-% \subsection{標題}     — 第二層（1.1 1.2）
-% \subsubsection{標題}  — 第三層（1.1.1）
+% \section{標題}        — 第一層（homework 無編號，academic 自動編號 1. 2. 3.）
+% \subsection{標題}     — 第二層
+% \subsubsection{標題}  — 第三層
 % 編號格式和是否顯示編號取決於 \usestyle 的設定
 
 這是正文範例。Body text with both English and 中文混排。
@@ -317,9 +317,9 @@ Reference: \cref{fig:demo-full} shows the full-width figure.
 % 限制寬度
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.6\linewidth]{head}
-    \caption{縮到 60\% 頁寬。}
-    \label{fig:demo-60}
+    \includegraphics[width=0.3\linewidth]{head}
+    \caption{縮到 30\% 頁寬。}
+    \label{fig:demo-30}
 \end{figure}
 
 % 限制高度
@@ -355,6 +355,19 @@ Reference: \cref{fig:demo-full} shows the full-width figure.
 \end{figure}
 
 See \cref{fig:side-left} and \cref{fig:side-right}.
+
+\subsection{Shadow Box}
+
+% \shadowbox 是定義在 macros.tex 的通用包裝器，加上邊框 + 模糊陰影
+% 不限於圖片，任何內容都能包：\shadowbox{文字或 box}
+% 底層使用 tcolorbox 的 fuzzy shadow，需要 \usetikzlibrary{shadows}（見 preamble.tex）
+
+\begin{figure}[htbp]
+    \centering
+    \shadowbox{\includegraphics[width=0.2\linewidth]{head}}
+    \caption{圖片加上邊框與模糊陰影（\texttt{\textbackslash shadowbox}）。}
+    \label{fig:demo-shadow}
+\end{figure}
 
 % ============================================================
 \section{Tables}

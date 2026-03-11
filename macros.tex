@@ -87,7 +87,7 @@
 % ------------------------------------------------------------------
 % Style: homework
 %   Title: left-right aligned table (title+subtitle left, date+author right), hrule
-%   Sections: \large bold, no underline, numbered
+%   Sections: \large bold, no underline, NO numbering (type anything in heading)
 %   Header: left=\docheader (defaults to subtitle), right=author | Footer: centered page number
 %   Header rule: 0.4pt
 % ------------------------------------------------------------------
@@ -109,10 +109,10 @@
         \hrule
         \vspace{12pt}
     }%
-    % Sections: only h1 numbered ("1.") with rule; h2/h3 unnumbered
+    % Sections: all unnumbered (type anything in heading); h1 has rule
     \titleformat{\section}
         {\color{\HeadingColor}\LARGE\bfseries}
-        {\thesection.}{0.5em}{}
+        {}{0em}{}
         [\vspace{-4pt}\color{gray!70}\titlerule]
     \titlespacing{\section}{0pt}{10pt}{2pt}
     \titleformat{\subsection}
@@ -317,7 +317,44 @@
 }
 
 % ======================================================================
-% J. MARGIN NOTE
+% J. SHADOW BOX (generic wrapper: border + drop shadow)
+% ======================================================================
+
+% Usage: \shadowbox{\includegraphics[...]{...}}
+%        \shadowbox{any content}
+% Shadow is rendered via tikz [overlay] so it does NOT affect bounding box,
+% meaning centering, spacing, and caption distance stay identical to bare content.
+%
+% --- CONFIG (tweak these) ---
+\newcommand{\ShadowColor}{gray}        % shadow color
+\newcommand{\ShadowBorderColor}{gray}  % border color
+\newcommand{\ShadowBorderWidth}{0.4pt} % border line width
+\newcommand{\ShadowLayers}{5}          % number of blur layers (more = smoother)
+\newcommand{\ShadowXShift}{0.15mm}     % base X offset per layer (positive = right)
+\newcommand{\ShadowYShift}{-0.15mm}    % base Y offset per layer (negative = down)
+\newcommand{\ShadowSpread}{0.12mm}     % extra spread per layer (controls blur radius)
+\newcommand{\ShadowBaseOpacity}{0.12}  % opacity of innermost shadow layer
+\newcommand{\ShadowFadeRate}{0.018}    % opacity decrease per layer
+% ---
+\newcommand{\shadowbox}[1]{%
+    \begin{tikzpicture}
+        \node[inner sep=0pt] (C) {#1};
+        \draw[\ShadowBorderColor, line width=\ShadowBorderWidth]
+            (C.south west) rectangle (C.north east);
+        \begin{scope}[on background layer, overlay]
+            \foreach \s in {1,...,\ShadowLayers} {
+                \pgfmathsetmacro{\op}{\ShadowBaseOpacity - \ShadowFadeRate*\s}
+                \fill[\ShadowColor, opacity=\op]
+                    ([shift={({\ShadowXShift+\ShadowSpread*\s},{\ShadowYShift-\ShadowSpread*\s})}]C.south west)
+                    rectangle
+                    ([shift={({\ShadowXShift+\ShadowSpread*\s},{\ShadowYShift-\ShadowSpread*\s})}]C.north east);
+            }
+        \end{scope}
+    \end{tikzpicture}%
+}
+
+% ======================================================================
+% K. MARGIN NOTE
 % ======================================================================
 
 \newcommand{\marginmark}[1]{%
