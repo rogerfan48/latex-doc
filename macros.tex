@@ -29,7 +29,7 @@
         \csname style@#1\endcsname
     \else
         \PackageError{macros}{Unknown style '#1'}{%
-            Available styles: academic, homework, minimal, custom}%
+            Available styles: academic, homework, note, minimal, custom}%
     \fi
 }
 
@@ -126,6 +126,59 @@
     % Header / Footer
     \fancyhf{}
     \fancyhead[L]{\small\ifx\DocHeader\empty\DocSubtitle\else\DocHeader\fi}
+    \fancyhead[R]{\small\DocAuthor}
+    \fancyfoot[C]{\small\thepage}
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0pt}
+    \fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}%
+}
+
+% ------------------------------------------------------------------
+% Style: note
+%   Title: left-aligned 24pt title, subtitle, author · date inline, hrule
+%   Sections: \LARGE bold with underline, numbered
+%   Header: left=\docheader (defaults to title), right=author | Footer: centered page number
+%   Header rule: 0.4pt
+% ------------------------------------------------------------------
+\newcommand{\style@note}{%
+    % Title (first page has no header)
+    \renewcommand{\maketitle}{%
+        \thispagestyle{plain}%
+        \noindent
+        {\fontsize{24pt}{30pt}\selectfont\bfseries\color{\TitleColor}\DocTitle\par}
+        \vspace{4pt}
+        \ifx\DocSubtitle\empty\else
+            {\vspace{-6pt}\fontsize{12pt}{16pt}\selectfont\color{\HeadingColor}\DocSubtitle\par}
+        \fi
+        \ifx\DocAuthor\empty\else
+            {\vspace{-6pt}\normalsize\DocAuthor}%
+            \ifx\DocDate\empty\else{ · \DocDate}\fi
+            \par
+        \fi
+        \ifx\DocContact\empty\else
+            {\small\color{gray}\DocContact\par}
+        \fi
+        \vspace{4pt}
+        \hrule
+        \vspace{12pt}
+    }%
+    % Sections: all unnumbered (type anything in heading); h1 has rule
+    \titleformat{\section}
+        {\color{\HeadingColor}\LARGE\bfseries}
+        {\thesection.}{0.25em}{}
+        [\vspace{-4pt}\color{gray!70}\titlerule]
+    \titlespacing{\section}{0pt}{10pt}{2pt}
+    \titleformat{\subsection}
+        {\color{\HeadingColor}\Large\bfseries}
+        {}{0em}{}
+    \titlespacing{\subsection}{0pt}{8pt}{-2pt}
+    \titleformat{\subsubsection}
+        {\color{\HeadingColor}\large\bfseries}
+        {}{0em}{}
+    \titlespacing{\subsubsection}{0pt}{6pt}{-2pt}
+    % Header / Footer
+    \fancyhf{}
+    \fancyhead[L]{\small\ifx\DocHeader\empty\DocTitle\else\DocHeader\fi}
     \fancyhead[R]{\small\DocAuthor}
     \fancyfoot[C]{\small\thepage}
     \renewcommand{\headrulewidth}{0.4pt}

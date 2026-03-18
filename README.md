@@ -45,7 +45,8 @@ Set the style in `main.tex` with `\usestyle{name}`:
 | Style | Description |
 |---|---|
 | `academic` | Centered title, numbered sections with underline, page number footer |
-| `homework` | Left-right title layout (title + course left, date + author right), header with `\docheader` (defaults to subtitle) and author |
+| `homework` | Left-right title layout (title + course left, date + author right), unnumbered sections, header with `\docheader` (defaults to subtitle) and author |
+| `note` | Left-aligned 24pt title, author · date inline, numbered sections with underline, header with `\docheader` (defaults to title) and author |
 | `minimal` | Left-aligned title, unnumbered sections, clean and simple |
 | `custom` | Based on `academic`, override with your own `\titleformat` calls |
 
