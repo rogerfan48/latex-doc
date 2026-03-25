@@ -63,6 +63,14 @@ Set the style in `main.tex` with `\usestyle{name}`:
 - **Todo notes** — `\todox{}`, `\todomark{}`, `\tododone{}`
 - **Margin notes** — `\marginmark{}`
 
+## Notes on Display Math Spacing
+
+Manual `\setlength{\parskip}{...}` causes excessive vertical space around display math (`align*`, `\[...\]`, etc.) because LaTeX adds `\parskip` on top of `\abovedisplayskip` at every implicit paragraph break. This template uses the `parskip` package instead, which handles these interactions automatically.
+
+Additionally, `\abovedisplayskip` (~14pt at 12pt font) is reduced to 4pt via `\appto\normalsize` — necessary because `\normalsize` resets display skips on every call, overriding any direct `\setlength`.
+
+**Writing tip:** Avoid placing display math directly after a section heading with no text in between — it creates an empty paragraph that adds a full `\baselineskip` (~17pt) of unwanted space. Always add at least a short introductory line.
+
 ## Compilation
 
 Compile with LuaLaTeX:

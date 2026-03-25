@@ -17,8 +17,6 @@
 \newcommand{\MarginRight}{1.5cm}
 \newcommand{\MarginTop}{2cm}
 \newcommand{\MarginBottom}{2cm}
-\newcommand{\ParIndent}{0pt}          % paragraph indentation
-\newcommand{\ParSkip}{6pt}            % paragraph spacing
 \newcommand{\BaseLineStretch}{1.15}   % line spacing multiplier
 
 % ====== COLORS ======
@@ -50,6 +48,13 @@
 \usepackage[dvipsnames, svgnames]{xcolor}  % extended color names
 \usepackage{graphicx}                      % image inclusion
 \graphicspath{{figures/}{assets/}}
+
+% --- Paragraph Spacing ---
+% parskip package: sets \parskip and \parindent, and fixes interactions
+% with display math, lists, and toc (prevents extra spacing).
+% Replaces manual \setlength{\parindent}{...} and \setlength{\parskip}{...}.
+% To adjust: \usepackage[skip=<size> plus <stretch>, indent=<size>]{parskip}
+\usepackage[skip=6pt plus 2pt]{parskip}
 
 % --- Math ---
 \usepackage{amsmath, amssymb, amsthm}
@@ -122,9 +127,18 @@
 }
 
 % --- Paragraph ---
-\setlength{\parindent}{\ParIndent}
-\setlength{\parskip}{\ParSkip}
 \renewcommand{\baselinestretch}{\BaseLineStretch}
+
+% --- Display Math Spacing ---
+% \normalsize resets \abovedisplayskip to ~14pt on every call;
+% append our tighter values so they persist after font-size changes.
+\appto\normalsize{%
+  \abovedisplayskip=4pt plus 2pt minus 2pt
+  \belowdisplayskip=4pt plus 2pt minus 2pt
+  \abovedisplayshortskip=0pt plus 2pt
+  \belowdisplayshortskip=2pt plus 2pt minus 2pt
+}
+\normalsize
 
 % --- Body Color ---
 \color{\BodyColor}
