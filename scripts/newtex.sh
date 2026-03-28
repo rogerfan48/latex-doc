@@ -74,13 +74,14 @@ newtex() {
     cp "$tpl/preamble.tex" "$name/"
     cp "$tpl/.gitignore"   "$name/"
     cp "$tpl/.chktexrc"    "$name/"
+    cp "$tpl/.latexindent.yaml" "$name/"
 
     if $ref; then
         cp "$tpl/ref.tex" "$name/"
     fi
 
     echo "Created LaTeX project: $name/"
-    echo "  main.tex, preamble.tex, macros.tex, .gitignore, .chktexrc, assets/"
+    echo "  main.tex, preamble.tex, macros.tex, .gitignore, .chktexrc, .latexindent.yaml, assets/"
     if $ref; then
         echo "  ref.tex (reference included)"
     fi

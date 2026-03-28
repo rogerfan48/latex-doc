@@ -161,19 +161,19 @@ English quotes: ``double quotes'' and `single quotes'.
 % 同理：amberbox (Warning)、greenbox (Tip)、redbox (Danger)
 
 \begin{bluebox}
-This is an informational note with default title.
+    This is an informational note with default title.
 \end{bluebox}
 
 \begin{amberbox}[Caution: Memory Leak]
-This is a warning with a custom title.
+    This is a warning with a custom title.
 \end{amberbox}
 
 \begin{greenbox}
-This is a tip with default title.
+    This is a tip with default title.
 \end{greenbox}
 
 \begin{redbox}[Critical Bug]
-This is a danger alert with a custom title.
+    This is a danger alert with a custom title.
 \end{redbox}
 
 % ============================================================
@@ -182,9 +182,9 @@ This is a danger alert with a custom title.
 
 % 左側灰色豎線 + 斜體灰字，用於引言
 \begin{blockquote}
-The only way to do great work is to love what you do.
+    The only way to do great work is to love what you do.
 
---- Steve Jobs
+    --- Steve Jobs
 \end{blockquote}
 
 % ============================================================
@@ -214,8 +214,8 @@ Reference: \cref{eq:gaussian}.
 % align 環境，用 & 標記對齊點，用 \\ 換行
 % 每行都有編號；不要編號的行在 \\ 前加 \nonumber
 \begin{align}
-    f(x) &= x^2 + 2x + 1     \label{eq:fx} \\
-         &= (x + 1)^2         \nonumber
+    f(x) & = x^2 + 2x + 1     \label{eq:fx} \\
+         & = (x + 1)^2         \nonumber
 \end{align}
 
 % --- 常用符號速查 ---
@@ -395,9 +395,9 @@ See \cref{fig:side-left} and \cref{fig:side-right}.
         \toprule
         \textbf{Name} & \textbf{Score} & \textbf{Grade} \\
         \midrule
-        Alice   & 95 & A+ \\
-        Bob     & 87 & A  \\
-        Charlie & 72 & B  \\
+        Alice         & 95             & A+             \\
+        Bob           & 87             & A              \\
+        Charlie       & 72             & B              \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -513,25 +513,25 @@ This paragraph has a margin note.\marginmark{Remember this point.}
 \subsection{Two Columns}
 
 \begin{twocol}
-\textbf{Left column.} Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
+    \textbf{Left column.} Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
 
-\columnbreak
+    \columnbreak
 
-\textbf{Right column.} Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.
+    \textbf{Right column.} Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.
 \end{twocol}
 
 \subsection{Three Columns}
 
 \begin{threecol}
-\textbf{Column 1.} Short text.
+    \textbf{Column 1.} Short text.
 
-\columnbreak
+    \columnbreak
 
-\textbf{Column 2.} Medium length paragraph for demonstration.
+    \textbf{Column 2.} Medium length paragraph for demonstration.
 
-\columnbreak
+    \columnbreak
 
-\textbf{Column 3.} Another column.
+    \textbf{Column 3.} Another column.
 \end{threecol}
 
 % ============================================================

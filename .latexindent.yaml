@@ -1,0 +1,7 @@
+defaultIndent: "    "
+noAdditionalIndent:
+    item: 1
+verbatimEnvironments:
+    codeblock: 1
+    lstlisting: 1
+    minted: 1

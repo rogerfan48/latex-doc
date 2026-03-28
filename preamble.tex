@@ -77,10 +77,10 @@
 % --- Boxes ---
 \usepackage[most]{tcolorbox}               % colored boxes / callouts
 \usepackage{tikz}                          % inline graphics (link badges, etc.)
-\usetikzlibrary{shadows,backgrounds}       % drop shadow + background layer
+\usetikzlibrary{shadows,backgrounds,fit,positioning}
 
 % --- Algorithms ---
-\usepackage[ruled, lined, linesnumbered]{algorithm2e}
+\usepackage[tworuled, vlined, linesnumbered]{algorithm2e}
 
 % --- Bibliography ---
 \usepackage[
@@ -193,6 +193,15 @@
 \SetAlgoLined
 \SetKwInput{KwInput}{Input}
 \SetKwInput{KwOutput}{Output}
+\SetNlSty{textnormal}{\color{gray!40}}{}  % light gray line numbers
+% Separator between Input/Output and algorithm body (matches ruled line style)
+\newcommand{\AlgoSep}{%
+  \vspace{2pt}%
+  \nointerlineskip
+  \hbox to 0pt{\vrule width\linewidth height\algoheightrule depth0pt\hss}%
+  \nointerlineskip
+  \vspace{\dimexpr4pt+\algoheightrule}%
+}
 
 % --- Lists ---
 \setlist{nosep, leftmargin=1.5em}
