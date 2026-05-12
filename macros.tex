@@ -23,6 +23,9 @@
 
 \makeatletter
 
+\newcommand{\sectionbreak}{}
+\newcommand{\subsectionbreak}{}
+
 % --- Style dispatcher ---
 \newcommand{\usestyle}[1]{%
     \ifcsname style@#1\endcsname
@@ -64,6 +67,9 @@
         \vspace{12pt}
     }%
     % Sections
+    \renewcommand{\sectionbreak}{\Needspace*{3cm}}
+    \renewcommand{\subsectionbreak}{\Needspace*{3cm}}
+
     \titleformat{\section}
         {\color{\HeadingColor}\Large\bfseries}
         {\thesection}{1em}{}
@@ -110,6 +116,9 @@
         \vspace{12pt}
     }%
     % Sections: all unnumbered (type anything in heading); h1 has rule
+    \renewcommand{\sectionbreak}{\Needspace*{3cm}}
+    \renewcommand{\subsectionbreak}{\Needspace*{3cm}}
+
     \titleformat{\section}
         {\color{\HeadingColor}\LARGE\bfseries}
         {}{0em}{}
@@ -163,6 +172,9 @@
         \vspace{12pt}
     }%
     % Sections: all unnumbered (type anything in heading); h1 has rule
+    \renewcommand{\sectionbreak}{\Needspace*{3cm}}
+    \renewcommand{\subsectionbreak}{\Needspace*{3cm}}
+
     \titleformat{\section}
         {\color{\HeadingColor}\LARGE\bfseries}
         {\thesection.}{0.25em}{}
@@ -210,6 +222,9 @@
         \vspace{12pt}
     }%
     % Sections (no numbering)
+    \renewcommand{\sectionbreak}{\Needspace*{3cm}}
+    \renewcommand{\subsectionbreak}{\Needspace*{3cm}}
+
     \titleformat{\section}
         {\color{\HeadingColor}\Large\bfseries}
         {}{0em}{}
@@ -247,14 +262,19 @@
 \newtcblisting{codeblock}[1][python]{
     colback=CodeBg,
     colframe=CodeBg,
+    breakable,
     listing only,
-    listing options={language=#1},
+    listing options={
+        language=#1,
+        basicstyle=\footnotesize\ttfamily\color{CodeFg},
+        lineskip=-0.5pt
+    },
     arc=2pt,
     boxrule=0pt,
     borderline west={2.5pt}{0pt}{CodeAccent},
-    left=8pt, right=8pt, top=4pt, bottom=4pt,
-    before skip=8pt,
-    after skip=8pt,
+    left=6pt, right=6pt, top=3pt, bottom=3pt,
+    before skip=6pt,
+    after skip=6pt,
 }
 
 % inline code — rounded background pill

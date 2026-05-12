@@ -56,6 +56,9 @@
 % To adjust: \usepackage[skip=<size> plus <stretch>, indent=<size>]{parskip}
 \usepackage[skip=6pt plus 2pt]{parskip}
 
+\usepackage{needspace}
+\needspace{4\baselineskip}  % prevent widow/orphan lines (requires parskip)
+
 % --- Math ---
 \usepackage{amsmath, amssymb, amsthm}
 
@@ -73,6 +76,7 @@
 
 % --- Captions ---
 \usepackage{caption}
+\usepackage{subcaption}
 
 % --- Boxes ---
 \usepackage[most]{tcolorbox}               % colored boxes / callouts
